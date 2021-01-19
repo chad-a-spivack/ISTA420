@@ -1,0 +1,57 @@
+# Chad Spivack
+## T-SQL Homework 02a
+## January 18, 2021
+
+### 1. List the order of execution of a SQL query.
+
+From, where, group by, having, select, order by.
+
+
+### 2. What does the *from* clause do?
+
+Specify the name of the table you want to use and this results in returning all of the rows from all of the tables.
+
+
+### 3. What does the *where* clause do?
+
+Specify a predicate or logical expression to filter results for example "Where age is = 50." It is a row filter.
+
+
+### 4. What does the *group by* clause do?
+
+Arranges the rows in the fashion that user wants.  Groups the rows by the same value.
+
+
+### 5. What does the *having* clause do?
+
+Operates on the group as a filter.  Only results evaluating to true will be displayed.
+
+
+### 6. What does the *select* claue do?
+
+Specify the columns you want to display.
+
+
+### 7. What does the *distinct* keyword do?
+
+Removes duplicates in the query
+
+
+### 8. What does the *order by* clause do?
+
+Sorting the rows for presentation.  For example in alphabetical order, etc.
+
+
+### 9. What does the *limit* clause do?
+
+Sets a limit for the amount of tuples that are returned in a query.
+
+
+### 10. What does the *top* clause do?
+
+How you would return a result for the top 5 orders in a database for example.
+
+
+### 11.  What do the *offset and fetch* clauses do?
+
+It is like the top clause but you can skip rows and then specify how many more rows after the skip to return.

@@ -1,0 +1,87 @@
+1. How does the book describe the difference between imperative and declarative languages?
+
+	An imperative language, which most programming languages use, requires you tell it how to get something.  SQL is a declarative language in contrast,
+	in which you tell it WHAT you want to get rather than how to get it.
+	
+2. List three categories of command statements in SQL
+	
+	1. Data Definition Language (DDL)
+	2. Data Management Language (DML)
+	3. Data Control Language (DCL)
+
+3. Give an informal definition of "database" as used in the expression "relational database management system?
+
+	Database in this sense would be a collection of sets, where the entries are based off of true/false logic.  For example,
+	you can have a list of employees but want to find out who is over 40 years old.  You can set your predicate (or true/false) to greater than 40 years old.
+	Any entity that is greater than 40 will return as "true," and thus will be displayed.
+	
+   Give an informal definition of "database" as used in the expression “Human Resources database.”
+
+	Database in this sense would be the raw data a company collects to keep track of their employees.
+	It could be as simple as an excel spreadsheet that lists out the name, DOB, and employeeID .
+	
+4. The book states that, "the goal of the relational model is to enable consisten representation of data with minimal or no redundancy and completeness. " 
+	Briefly State your understanding of minimal or no redundancy and completeness.  Why do you think that these values are important?
+	
+		Minimal or no redundancy means that an entity won't be queried multiple different ways or that the same entity does not exist in multiple tables.  Completeness refers
+		to having all of the information required at the same time.  This is important because it increases the efficiency of each query because you should be able to find exactly
+		what you are looking for.
+		
+5. What is the difference between two-valued logic, three valued logic, and four valued logic?  How does SQL implement three-valued logic?
+
+	Two valued logic can only be true or false.  Three valued logic can be true false or unknown.  Four valued logic can be true, false, missing but applicable, and missing and inappplicable.
+
+
+6. Give an informal definition of entity integrity.
+
+	Provided by candidate keys in the RDBMS model, entity integrity eliminates the possibility of having duplicate tuples or rows in a database. 
+	For example, if you use someone's DODID# as a candidate key, you guarantee that there will not be two entities that are exactly the same, or multiple entries in the database
+	for the same person or entity.
+	
+7. Give an informal definition of referential integrity.
+
+	Provided by foreign keys, referential integrity is a way to constrain data results to only looking for a result in one area.  
+	For example, store # might be the primary key in a "stores" relation. However, store # can also be a foreign key in a "employee" relation.  
+	So when you want to query certain things about employees who work at a specific store, referential integrity makes that possible.  An employee has to have a store # otherwise 
+	they aren't an employee in the database.
+	
+8. What is a relation as defined in the textbook? A one-word answer to this question is sufficient.
+
+	A Set
+	
+9. Relational databases are based on three mathematical concepts: set theory, predicate logic and relational algebra.
+	(a) Please give your brief understanding of set theory as described in the text.  What is a set?
+		
+		Stop thinking of data in terms of individual items, but rather "sets" of those items.  A set is an unordered collection of objects that are all unique
+		from all other items in the set.  That way each tuble can be queried and identified.
+		
+	(b) Please give your brief understanding of predicate logic as described in the text.  What is predicate logic?
+	
+		predicates can define sets.  Items either "hold or don't hold."  In other words, they are either an employee or not. 
+		This would be relevant in a set called "employees."  A predicate is an attribute.
+		
+	(c) Please give your brief understanding of relational algebra.  What is selection? What is projection?
+		
+		Variables will take the place of databases, sets, predicates, etc in order to create a blanket formula for data queries.
+		Projection eliminates all inputs but those that are specifically asked for, or thne  column in a table.  A selection is a query for a row.
+	
+10. Is this table in first normal form? Why or why not? If it is not, how would you change it?
+
+	No, it is not in 1NF.  Create a seperate table for FACid, CredID, and a compound primary key of FACID and CredID.
+	
+11. Is this table in second normal form? Why or why not? If it is not, how would you change it?
+
+	No, this table is not in 2NF as you could find the petname and pet type by knowing the petID.  
+	In order to make the table conform to 2NF, create three tables.  the first for owner, the second for pet, and the third with a compound primary key of owner id and petid.
+
+12. Is this table in third normal form? Why or why not? If it is not, how would you change it?
+
+	No, it is not in 3NF. There are transitive dependencies.  Split it into three tables, ID, address and zip.
+	
+13. List the components of a four-part object name.
+	
+	Object, Schema, Other Database, and  object in another instance.
+	
+14. What is the difference between declarative data integrity and procedural data integrity?
+
+	Declarative intregrity is enforced on structure of the table where procedural data integrity is enforced by code.

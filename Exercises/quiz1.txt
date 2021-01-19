@@ -1,0 +1,25 @@
+.echo on
+.headers on
+
+-- Name: Chad Spivack
+-- File : myfamily<Spivack>.sql
+-- Date: January 12, 2021
+
+Drop table if exists myfamily<Spivack>;
+
+Create table myfamily<Spivack> (
+	id int primary key,
+	name text,
+	sex int,
+	role text,
+	weight
+);
+
+Insert into myfamily<Spivack> values (1, "Lawrence", 1, "Dad", 175);
+Insert into myfamily<Spivack> values (2, "Jane", 0, "Mom", NULL);
+Insert into myfamily<Spivack> values (3, "Chad", 1, "Child", 210);
+Insert into myfamily<Spivack> values (4, "Jocelyn", 0, "Fiance", NULL);
+Insert into myfamily<Spivack> values (5, "Zulu", 1, "Pet", 55);
+Insert into myfamily<Spivack> values (6, "Camelia", 0, "Pet", 50);
+
+Select * from myfamily<Spivack>

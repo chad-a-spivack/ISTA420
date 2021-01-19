@@ -1,0 +1,104 @@
+# SQL programming exercise 1
+### Chad Spivack
+### January 13, 2021
+
+```
+    .headers on
+
+    -- Name: Chad Spivack
+    -- File Name: SQL Programming Exercise 01
+	-- Date: January 12, 2021
+
+	Drop table if exists mycars;
+
+	Create table mycars (
+		Vin int primary key,
+		Year int check (year > 0 and year < 2021) ,
+		Weight real,
+		Make text check 
+		Model text,
+		SpecialEquip text 
+	);
+
+	insert into mycars values (1234, 1983, 2718, "DMC", "Delorean", "Time Travel");
+	insert into mycars values (4567, 1955, 7000 , "Lincoln", "Batmobile", "Submarine Capable");
+	insert into mycars values (1357, 1964, 3311 , "Aston Martin", "DB5", "Smoke Screen");
+	insert into mycars values (2468, 1967, 4200, "Ford", "Mustang GT-500", "Gone in 60 Seconds");
+	insert into mycars values (1919, 1969, 3671, "Dodge", "Charger", "Outruns Boss Hog");
+	insert into mycars values (0432, 1982, 3327, "Pontiac", "Trans Am", "Can talk");
+```
+
+
+### Full Table
+
+```
+	select * from mycars;
+```
+
+**Vin|Year|Weight|Make|Model|SpecialEquip**
+1234|1983|2718.0|DMC|Delorean|Time Travel
+4567|1955|7000.0|Lincoln|Batmobile|Submarine Capable
+1357|1964|3311.0|Aston Martin|DB5|Smoke Screen
+2468|1967|4200.0|Ford|Mustang GT-500|Gone in 60 Seconds
+1919|1969|3671.0|Dodge|Charger|Outruns Boss Hog
+432|1982|3327.0|Pontiac|Trans Am|Can talk
+
+
+### High Weight
+
+```
+	select * from mycars where weight > 4000;
+```
+**Vin|Year|Weight|Make|Model|SpecialEquip**
+4567|1955|7000.0|Lincoln|Batmobile|Submarine Capable
+2468|1967|4200.0|Ford|Mustang GT-500|Gone in 60 Seconds
+
+
+### Newer Cars
+```
+	select * from mycars where year > 1966;
+```
+
+**Vin|Year|Weight|Make|Model|SpecialEquip**
+1234|1983|2718.0|DMC|Delorean|Time Travel
+2468|1967|4200.0|Ford|Mustang GT-500|Gone in 60 Seconds
+1919|1969|3671.0|Dodge|Charger|Outruns Boss Hog
+432|1982|3327.0|Pontiac|Trans Am|Can talk
+
+
+### Older Cars
+
+```
+	select * from mycars where year < 1969;
+```
+
+**Vin|Year|Weight|Make|Model|SpecialEquip**
+4567|1955|7000.0|Lincoln|Batmobile|Submarine Capable
+1357|1964|3311.0|Aston Martin|DB5|Smoke Screen
+2468|1967|4200.0|Ford|Mustang GT-500|Gone in 60 Seconds
+
+
+
+### Car Makes
+
+```
+	select Make from mycars;
+```
+	
+Make
+DMC
+Lincoln
+Aston Martin
+Ford
+Dodge
+Pontiac
+
+
+### Average Car Weight
+
+```
+	select avg(Weight) from mycars;
+```
+
+avg(Weight)
+4037.83333333333
