@@ -1,0 +1,55 @@
+# TSQL Homework 02b
+## Chad Spivack
+## January 19, 2021
+
+### 1. What is a data type? Why do we have data types?
+
+Determines what is being stored in the memory for a given object.  Determines how the binary is evaluated. In order to understand what the binary is, you have to assign a data
+
+### 2. What is a collation? Name four elements of a collation.
+
+Property of character data that encapsulates several aspects: language support, sort order, case sensitivity,
+and accent sensitivity..  The 4 elements are instance, database, column, and expression.
+
+### 3. How would you strip whitespace from a string?
+
+Use the TRIM function.
+
+### 4. Suppose you wanted to make a list of every college and university that was called a 
+Institute from the college table.  Write the query.
+
+Select * from colleges where collegeName LIKE '%Institute%';
+
+### 5. How would you find the number of 
+the index of the first space in a string?
+
+Select instr("Barack Hussein Obama", " ");
+This is a scalar function.  This means it returns a single value.
+
+
+### 6. How would you select just the first name in a list of the presidents?
+
+Using the substring function.  Determine how many characters are in the first name and run the substring.
+Select SUBSTR("Barack Hussein Obama", 0, instr("Barack Hussein Obama", " "));
+
+### 7. What is the order of precedence for the logical operators?
+
+NOT, AND, or
+
+### 8. What is th order of precedence for math operators?
+
+Parentheses, multiplication/division, +/-, =/</>
+
+### 9. What is the difference between a simple and a searched CASE expression?
+
+Simple is used to compare one value and return a value for the first match.  Based on a literal value.
+Searched is more dynamic that you can set up up when statements to create more possible matches.  Based on an expression.
+
+### 10. How would you turn a list of names like "LASTNAME, FIRSTNAME" into "FIRSTNAME LASTNAME?"
+
+Select substr("LastName, FirstName", instr("LastName, FirstName", " ")+1) || " " || substr("LastName, Firstname", 0, instr("LastName, FirstName", ","));
+
+### 11.How would you turn a list like "FIRSTNAME LASTNAME" into LASTNAME, FIRSTNAME?
+
+Select substr("FirstName LastName", instr("FirstName LastName", " ")+1) || ", " || substr("FirstName LastName", 0, instr("FirstName LastName", " "));
+

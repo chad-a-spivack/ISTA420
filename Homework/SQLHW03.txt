@@ -1,0 +1,47 @@
+# T-SQL Homework Chapter 3
+## Chad Spivack
+## January 25, 2021
+
+### 1. In general, why would you even want to join two (or more) tables together? This is a good time to think about the nature of relational algebra.
+
+You want to figure out which salesmen is selling to what customer the most or you want to figure out what product he is selling to that customer the most.
+You could use that for performance reviews etc.  Fetch data from other tables to put them in one result; everything is taken apart due to normalization when creating a DB.
+
+### 2. Describe in your own words the output from an inner join.
+
+You can merge rows having to do with the same idea. Selects all rows between the tables as long as there is a match between columns.  Filters our rows in the Cartesian product that don't match the secific predicate. For example, you want to find out how many orders one employee has made but you also want to know the orderIDs.
+Chances are these will be in a separate database, so you have to join them. Ex.  only marines who have been issued rifles.
+
+
+### 3. Describe in your own words the output from an outer join.
+
+It preserves every row in the table.  In an inner join, if a row doesnt match, the row is discarded as an "outer row."  In an outer join, those outer rows are preserved.
+This comes in handy if you want to know customers who have not placed any orders.  That data would not be returned in an inner join.
+
+ex. Left: All marines who have rifles + marines who have not been issued rifles.
+	Right: All marines who have rifles + rifles who have not been issued.
+	Full: All marine who have rifles + marines who have not been issued rifles + rifles who have not been issued.
+
+
+### 4. Describe in your own words the output from an cross join.
+
+You multiply rows in one table by rows in the other.  You create a table where every row in the left table has a corresponding row in the right table. Cartesian Product.
+
+
+### 5. A convenient mnemonic for remembering the various joins is “Ohio.” Why is this true?
+
+Left outer join, Inner join, right outer join.
+
+
+### 6. Give an example of a composite join.
+
+Multiple attributes from each side.
+
+
+### 7. What is the difference between the following two queries? The business problem is “How many orders do we have from each customer?”
+
+The 1st query counts all of the rows where as the second is only going to count the rows that appear in O.
+
+### 8. What might be one reason the following query does not return the column custID in this query?
+
+CustID is in the right table so its rows may not be perserved.
