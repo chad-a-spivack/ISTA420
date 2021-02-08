@@ -1,0 +1,47 @@
+# T-SQL Homework Chapter 4
+## Chad Spivack
+## January 30, 2021
+
+### 1. In your own words, what is a subquery?
+
+Takes the place of an expression inside of a query.  Used to make the query more dynamic.
+
+### 2. In your own words, what is a self contained subquery?
+
+A subquery that can still run independently of the outer query.
+
+### 3. In your own words, what is a correlated subquery?
+
+A subquery that relies on the tables in the outer query, making it dependent on the outer query and cannot be run independently.
+
+
+### 4. Give an example of a subquery that returns a single value. When would you use this kind of subquery?
+
+Using the max function to determine the highest sale amount, but also give it a variable name so it can be run dynamically.
+
+### 5. Give an example of a subquery that returns multiple values. When would you use this kind of subquery?
+
+A subquery that returns the number of customers that live in the United States.
+
+### 6. Give an example of a subquery that returns table values. When would you use this kind of subquery?
+
+Using the exists clause.  You'd use it to make sure that you're only querying rows that exist.
+
+### 7. What does the exists predicate do? Give an example.
+
+It only runs the query for rows that exist.  Return customers from Spain where the orderID are the same for the order and the customer.
+
+### 8. What happens if we use the not operator before a predicate? Give an example.
+
+Negates a condition in the Where clause. Select * from customers where orderid not between 3 and 4.
+
+### 9. When you use exists or not exists with respect to a row in a database, does it return two or three
+values? Explain your answer.
+
+It returns two values.  A row either exists or it doesn't.  There's no NULL option.
+
+### 10. How would you use a subquery to calculate aggregates? For example, you want to calculate yearly
+sales of a product, and you also want to keep a running sum of total sales. Explain how you would use
+a subquery to do this.
+
+You'd subquery the total of all sales based on the year.

@@ -1,0 +1,53 @@
+# T-SQL Homework Chapter 5
+## Chad Spivack
+## February 1, 2021
+
+### 1. What is a table expression? Can you give a technical definition of a table expression?
+
+A named query expression that represents a valid relational table. It is a query that is used as a table.  The table doesn't actually exist.
+
+### 2. In what SQL clause are derived tables (table valued subqueries) located?
+
+The *From* clause.
+
+### 3. Why can you refer to column aliases in an outer query that you defined in an inner table valued
+subquery?
+
+They are evaluated prior to the *Select* clause in the outer query.
+
+### 4. What SQL key word defines a common table expression?
+
+Using a *with* statement.
+
+### 5. When using common table expressions, can a subsequent derived table use a table alias declared in a
+preceding table expression?
+
+no
+
+### 6. Can a main query refer to a previously defined common table expression by multiple aliases?
+
+Yes
+
+### 7. In SQL, is a view a durable object?
+
+yes
+
+### 8. In a view, what does WITH CHECK OPTION do? Why is this important?
+
+Prevent modifications that conflict with the view's filter. You can't add rows that conflict with the filter.
+
+### 9. In a view, what does SCHEMABINDING do? Why is this important?
+
+It binds the schema to the referenced object.  This is important if you do not want any of the data in the referenced onject to be altered.
+
+### 10. What is a table valued function?
+
+Reusable table expressions that support input parameters.
+
+### 11. What does the APPLY operator do?
+
+Similar to a join but it works with derived tables.
+
+### 12. What are the two forms of the APPLY operator? Give an example of each.
+
+Cross and Outer. 

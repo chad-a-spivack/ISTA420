@@ -1,0 +1,45 @@
+# SQL Homerwork chapter 6
+## Chad Spivack
+## February 5, 2021
+
+### 1. What does a set operator do?
+
+Combines rows from two query result sets.
+
+### 2. What are the general requirements of a set operator
+
+Must produce results with the same number of columns, corresponding data must have same data type
+
+### 3. What is a Venn Diagram? This is not in the book.
+
+Two circles that overlap to compare to topics or objects.  Includes difference and similarities.
+
+
+### 4. Draw a Venn Diagram of the UNION operator. What does it do?
+
+It unifies the results of two input queries.  If the row appears in any of the input sets, it will apear in the results of the union operator.
+
+### 5. Draw a Venn Diagram of the UNION ALL operator. What does it do?
+
+Doesn't remove duplicates.
+
+### 6. Draw a Venn Diagram of the INTERSECT operator. What does it do?
+
+Returns results of rows that are common to both queries.  The small overlapping circle in a venn diagram.
+
+### 7. If SQL Server supported the INTERSECT ALL operator, what would it do?
+
+Returns only duplicates of instances where both queries have a match.
+
+### 8. Draw a Venn Diagram of the EXCEPT operator. What does it do?
+
+Returns differences.  One of the circle of a venn diagram minus the section that overlaps with the other circle.
+
+### 9. If SQL Server supported the EXCEPT ALL operator, what would it do?
+
+
+Returns an occurence only if it doesn't have an occurence in the second query.
+
+### 10. What is the precedence of the set operators?
+
+Intersect, Union, Except.
