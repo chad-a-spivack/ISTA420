@@ -1,0 +1,318 @@
+.headers on
+.mode csv
+
+-- Name: Chad Spivack
+-- File: SQLProgEX03-Spivack.sql
+-- Date: January 26, 2021
+
+-- 1. We have noticed that certain customers prefer to make their orders with certain employees. We want
+--to increase business by encouraging the customer/employee pairs that are more productive, and to
+--channel the pairs that are less productive into other relationships. To this end, we have ordered this
+--query and the following three. First, I need the customer ID, the customer contact name, the employee
+--ID, the employee name, the order ID, the number of orders, and the total amount of each order, where
+--the customer/employee pair has produced five or more orders between them, ordered by the dollar
+--amount of the order from highest to lowest. The output needs to be in a comma separated format
+--with strings that include spaces and commas delimited by double quotes. The dollar amount should
+--be formatted as a decimal number with two decimal places. Here is the output.
+
+select c.customerID, c.contactname, e.employeeID, (e.firstname || ' ' || e.lastname) as emp_name, count(o.orderID) as num_orders, 
+	round(sum((od.unitprice * od.quantity) * (1 - od.discount)), 2) as Total_sales from orders o join customers c on o.customerID = c.customerID  
+	join employees e on e.employeeID = o.employeeID join order_details od on od.orderid = o.orderid group by o.orderID 
+	having count(o.orderid) >= 5 order by Total_sales desc;
+CustomerID,ContactName,EmployeeID,emp_name,num_orders,Total_sales
+QUICK,"Horst Kloss",2,"Andrew Fuller",5,10164.8
+QUICK,"Horst Kloss",2,"Andrew Fuller",5,9921.3
+ERNSH,"Roland Mendel",3,"Janet Leverling",5,8623.45
+BLONP,"Frédérique Citeaux",4,"Margaret Peacock",5,7390.2
+SAVEA,"Jose Pavarotti",5,"Steven Buchanan",5,6475.4
+SAVEA,"Jose Pavarotti",1,"Nancy Davolio",5,6375.0
+QUICK,"Horst Kloss",3,"Janet Leverling",5,6306.24
+KOENE,"Philip Cramer",9,"Anne Dodsworth",5,5502.11
+SAVEA,"Jose Pavarotti",9,"Anne Dodsworth",5,5275.72
+SAVEA,"Jose Pavarotti",4,"Margaret Peacock",6,4931.92
+ERNSH,"Roland Mendel",8,"Laura Callahan",6,4813.5
+ERNSH,"Roland Mendel",7,"Robert King",5,4705.5
+SAVEA,"Jose Pavarotti",2,"Andrew Fuller",6,4371.6
+SAVEA,"Jose Pavarotti",1,"Nancy Davolio",5,4330.4
+SUPRD,"Pascale Cartrain",7,"Robert King",5,3891.0
+QUICK,"Horst Kloss",8,"Laura Callahan",5,3812.7
+QUICK,"Horst Kloss",8,"Laura Callahan",5,3584.0
+WHITC,"Karl Jablonski",4,"Margaret Peacock",5,3523.4
+ERNSH,"Roland Mendel",4,"Margaret Peacock",5,3436.44
+SAVEA,"Jose Pavarotti",6,"Michael Suyama",5,2944.4
+ERNSH,"Roland Mendel",4,"Margaret Peacock",5,2900.0
+SAVEA,"Jose Pavarotti",1,"Nancy Davolio",5,2556.95
+VAFFE,"Palle Ibsen",1,"Nancy Davolio",5,2518.0
+FRANK,"Peter Franken",4,"Margaret Peacock",5,2467.0
+SAVEA,"Jose Pavarotti",6,"Michael Suyama",5,2393.5
+FRANK,"Peter Franken",4,"Margaret Peacock",5,2301.75
+SAVEA,"Jose Pavarotti",5,"Steven Buchanan",5,2205.75
+AROUT,"Thomas Hardy",1,"Nancy Davolio",5,2142.9
+QUICK,"Horst Kloss",3,"Janet Leverling",5,2037.28
+RATTC,"Paula Wilson",4,"Margaret Peacock",5,1887.6
+QUEEN,"Lúcia Carvalho",7,"Robert King",5,1830.78
+RICSU,"Michael Holz",1,"Nancy Davolio",5,1823.8
+HUNGO,"Patricia McKenna",3,"Janet Leverling",5,1762.0
+WARTH,"Pirkko Koskitalo",2,"Andrew Fuller",5,1546.3
+KOENE,"Philip Cramer",1,"Nancy Davolio",5,1497.0
+FRANK,"Peter Franken",8,"Laura Callahan",5,1336.95
+RATTC,"Paula Wilson",1,"Nancy Davolio",25,1255.72
+
+-- 2. Second, I want the least productive pairs with the same columns. The total of orders should be less
+-- than three, the dollar amount of the order is less than $50.00, and the orders are ranked by increasing
+-- dollar amounts, starting with the least order. Here is the expected output.
+
+select c.customerID, c.contactname, e.employeeID, (e.firstname || ' ' || e.lastname) as emp_name, count(o.orderID) as num_orders, 
+	round(sum((od.unitprice * od.quantity) * (1 - od.discount)), 2) as Total_sales from orders o join customers c on o.customerID = c.customerID  
+	join employees e on e.employeeID = o.employeeID join order_details od on od.orderid = o.orderid group by o.orderID 
+	having count(o.orderID) < 3 and total_sales < 50 order by Total_sales;
+CustomerID,ContactName,EmployeeID,emp_name,num_orders,Total_sales
+CACTU,"Patricio Simpson",9,"Anne Dodsworth",1,12.5
+FRANS,"Paolo Accorti",4,"Margaret Peacock",1,18.4
+REGGC,"Maurizio Moroni",9,"Anne Dodsworth",1,23.8
+SUPRD,"Pascale Cartrain",4,"Margaret Peacock",1,28.0
+OCEAN,"Yvonne Moncada",4,"Margaret Peacock",1,30.0
+WELLI,"Paula Parente",1,"Nancy Davolio",1,33.75
+LONEP,"Fran Wilson",8,"Laura Callahan",1,36.0
+LAMAI,"Annette Roulet",7,"Robert King",1,36.0
+SAVEA,"Jose Pavarotti",2,"Andrew Fuller",1,40.0
+ISLAT,"Helen Bennett",4,"Margaret Peacock",1,45.0
+NORTS,"Simon Crowther",3,"Janet Leverling",1,45.0
+SPLIR,"Art Braunschweiger",6,"Michael Suyama",1,48.0
+VAFFE,"Palle Ibsen",8,"Laura Callahan",1,48.75
+FRANS,"Paolo Accorti",2,"Andrew Fuller",1,49.8
+	
+-- 3. Third, I need the most productive pairs as in the first report above, omitting the order ID but ranked
+-- by the average amount from highest to lowest of all orders by the customer/employee pair. Include
+-- only pairs where the amount of the average exceeds $2,500.00. Here is the expected output.
+
+select c.customerID, c.contactname, e.employeeID, (e.firstname || ' ' || e.lastname) as emp_name, count(o.orderID) as num_orders, 
+	round(avg((od.unitprice * od.quantity) * (1 - od.discount)), 2) as avg_sales from orders o join customers c on o.customerID = c.customerID  
+	join employees e on e.employeeID = o.employeeID join order_details od on od.orderid = o.orderid group by o.orderID 
+	having avg_sales > 2500 order by avg_sales desc;
+CustomerID,ContactName,EmployeeID,emp_name,num_orders,avg_sales
+HANAR,"Mario Pontes",1,"Nancy Davolio",1,15810.0
+QUICK,"Horst Kloss",2,"Andrew Fuller",2,8193.75
+RATTC,"Paula Wilson",9,"Anne Dodsworth",2,5690.0
+HUNGO,"Patricia McKenna",3,"Janet Leverling",2,5417.62
+PICCO,"Georg Pipps",7,"Robert King",2,4296.64
+GREAL,"Howard Snyder",4,"Margaret Peacock",2,4223.23
+SAVEA,"Jose Pavarotti",7,"Robert King",4,3153.76
+HUNGO,"Patricia McKenna",2,"Andrew Fuller",2,3100.28
+MEREP,"Jean Fresnière",7,"Robert King",3,3064.85
+WHITC,"Karl Jablonski",2,"Andrew Fuller",3,2967.5
+SIMOB,"Jytte Petersen",4,"Margaret Peacock",4,2797.1
+KOENE,"Philip Cramer",3,"Janet Leverling",4,2738.21
+RATTC,"Paula Wilson",3,"Janet Leverling",4,2623.9
+QUICK,"Horst Kloss",3,"Janet Leverling",4,2547.93
+	
+-- 4. Finally, I need the least productive pairs as ranked by average order amount, from lowest to highest,
+-- formatted as above. Omit the order ID. Include only pairs where the average order amount is less than
+-- $50.00. Here is the expected output.
+
+select c.customerID, c.contactname, e.employeeID, (e.firstname || ' ' || e.lastname) as emp_name, count(o.orderID) as num_orders, 
+	round(avg((od.unitprice * od.quantity) * (1 - od.discount)), 2) as avg_sales from orders o join customers c on o.customerID = c.customerID  
+	join employees e on e.employeeID = o.employeeID join order_details od on od.orderid = o.orderid group by o.orderID 
+	having avg_sales < 50 order by avg_sales;
+CustomerID,ContactName,EmployeeID,emp_name,num_orders,avg_sales
+CACTU,"Patricio Simpson",9,"Anne Dodsworth",1,12.5
+FRANS,"Paolo Accorti",4,"Margaret Peacock",1,18.4
+REGGC,"Maurizio Moroni",9,"Anne Dodsworth",1,23.8
+SUPRD,"Pascale Cartrain",4,"Margaret Peacock",1,28.0
+LAUGB,"Yoshi Tannamuri",2,"Andrew Fuller",2,28.75
+ROMEY,"Alejandra Camino",4,"Margaret Peacock",3,28.83
+OCEAN,"Yvonne Moncada",4,"Margaret Peacock",1,30.0
+WELLI,"Paula Parente",1,"Nancy Davolio",1,33.75
+LONEP,"Fran Wilson",8,"Laura Callahan",1,36.0
+LAMAI,"Annette Roulet",7,"Robert King",1,36.0
+RANCH,"Sergio Gutiérrez",6,"Michael Suyama",2,38.0
+SAVEA,"Jose Pavarotti",2,"Andrew Fuller",1,40.0
+REGGC,"Maurizio Moroni",4,"Margaret Peacock",2,40.05
+FRANS,"Paolo Accorti",3,"Janet Leverling",2,44.0
+ANATR,"Ana Trujillo",7,"Robert King",2,44.4
+ISLAT,"Helen Bennett",4,"Margaret Peacock",1,45.0
+NORTS,"Simon Crowther",3,"Janet Leverling",1,45.0
+FRANS,"Paolo Accorti",1,"Nancy Davolio",2,46.75
+SPLIR,"Art Braunschweiger",6,"Michael Suyama",1,48.0
+VAFFE,"Palle Ibsen",8,"Laura Callahan",1,48.75
+FRANS,"Paolo Accorti",2,"Andrew Fuller",1,49.8
+	
+-- 5. Please create a report with the order ID, the customer ID, the customer name, the customer country,
+-- and the dollar amount of the order, sorted alphabetically by country and numerically from highest to
+-- lowest by the dollar amount of the order, where the order total exceeds $5,000.00. Here is the output.
+
+select o.orderID, o.customerID, c.contactname, c.country, round(sum(od.unitprice * od.quantity), 2) as total_order from orders o 
+	join customers c on o.customerid = c.customerid join order_details od on o.orderid = od.orderID group by o.orderid having total_order > 5000 
+	order by country, total_order desc;
+OrderID,CustomerID,ContactName,Country,total_order
+10353,PICCO,"Georg Pipps",Austria,10741.6
+10514,ERNSH,"Roland Mendel",Austria,8623.45
+10776,ERNSH,"Roland Mendel",Austria,6984.5
+11017,ERNSH,"Roland Mendel",Austria,6750.0
+10633,ERNSH,"Roland Mendel",Austria,6483.05
+10895,ERNSH,"Roland Mendel",Austria,6379.4
+10595,ERNSH,"Roland Mendel",Austria,6300.0
+10430,ERNSH,"Roland Mendel",Austria,5796.0
+10351,ERNSH,"Roland Mendel",Austria,5677.6
+11072,ERNSH,"Roland Mendel",Austria,5218.0
+10981,HANAR,"Mario Pontes",Brazil,15810.0
+10372,QUEEN,"Lúcia Carvalho",Brazil,12281.2
+10424,MEREP,"Jean Fresnière",Canada,11493.2
+10417,SIMOB,"Jytte Petersen",Denmark,11283.2
+10360,BLONP,"Frédérique Citeaux",France,7390.2
+10865,QUICK,"Horst Kloss",Germany,17250.0
+10817,KOENE,"Philip Cramer",Germany,11490.7
+10515,QUICK,"Horst Kloss",Germany,10588.5
+10540,QUICK,"Horst Kloss",Germany,10191.7
+10691,QUICK,"Horst Kloss",Germany,10164.8
+11021,QUICK,"Horst Kloss",Germany,6941.49
+10893,KOENE,"Philip Cramer",Germany,5502.11
+10897,HUNGO,"Patricia McKenna",Ireland,10835.24
+10912,HUNGO,"Patricia McKenna",Ireland,8267.4
+10687,HUNGO,"Patricia McKenna",Ireland,6201.9
+10993,FOLKO,"Maria Larsson",Sweden,6527.25
+11030,SAVEA,"Jose Pavarotti",USA,16321.9
+10889,RATTC,"Paula Wilson",USA,11380.0
+10479,RATTC,"Paula Wilson",USA,10495.6
+11032,WHITC,"Karl Jablonski",USA,8902.5
+10816,GREAL,"Howard Snyder",USA,8891.0
+10607,SAVEA,"Jose Pavarotti",USA,6475.4
+10612,SAVEA,"Jose Pavarotti",USA,6375.0
+10847,SAVEA,"Jose Pavarotti",USA,6164.9
+10324,SAVEA,"Jose Pavarotti",USA,6155.9
+10440,SAVEA,"Jose Pavarotti",USA,5793.1
+10678,SAVEA,"Jose Pavarotti",USA,5256.5
+10616,GREAL,"Howard Snyder",USA,5032.0
+	
+-- 6. I want to know the unique (distinct) cities, regions, and postal codes: (a) where we have both customers
+-- and employees, (b) where we have customers but no employees AND both customers and employees,
+-- and (c) where we have employees but no customers AND both customers and employees. Write three
+-- queries, using inner and outer joins. Report the results of the queries. There is no need for any further
+-- reporting.
+
+.mode column
+
+-- (a)
+
+select distinct c.city, c.region, c.postalcode from customers c join employees e on c.city = e.city;
+City      Region  PostalCode
+--------  ------  ----------
+London            WA1 1DP   
+London            EC2 5NT   
+London            WX1 6LT   
+London            WX3 6FW   
+London            SW7 1RZ   
+London            OX15 4NB  
+Kirkland  WA      98034     
+Seattle   WA      98128     
+
+-- (b)
+
+select distinct c.city, c.region, c.postalcode from customers c left outer join employees e on c.city = e.city;
+City             Region         PostalCode
+---------------  -------------  ----------
+City             Region         PostalCode
+Berlin                          12209     
+México D.F.                     05021     
+México D.F.                     05023     
+London                          WA1 1DP   
+Luleå                           S-958 22  
+Mannheim                        68306     
+Strasbourg                      67000     
+Madrid                          28023     
+Marseille                       13008     
+Tsawassen        BC             T2F 8M4   
+London                          EC2 5NT   
+Buenos Aires                    1010      
+México D.F.                     05022     
+Bern                            3012      
+Sao Paulo        SP             05432-043 
+London                          WX1 6LT   
+Aachen                          52066     
+Nantes                          44000     
+London                          WX3 6FW   
+Graz                            8010      
+Sao Paulo        SP             05442-030 
+Madrid                          28034     
+Lille                           59000     
+Bräcke                          S-844 67  
+München                         80805     
+Torino                          10100     
+Lisboa                          1675      
+Barcelona                       08022     
+Sevilla                         41101     
+Campinas         SP             04876-786 
+Eugene           OR             97403     
+Caracas          DF             1081      
+Rio de Janeiro   RJ             05454-876 
+San Cristóbal    Táchira        5022      
+Elgin            OR             97827     
+Cork             Co. Cork                 
+Cowes            Isle of Wight  PO31 7PJ  
+Brandenburg                     14776     
+Versailles                      78000     
+Toulouse                        31000     
+Vancouver        BC             V3F 2K1   
+Walla Walla      WA             99362     
+Frankfurt a.M.                  60528     
+San Francisco    CA             94117     
+Barquisimeto     Lara           3508      
+I. de Margarita  Nueva Esparta  4980      
+Portland         OR             97219     
+Bergamo                         24100     
+Bruxelles                       B-1180    
+Montréal         Québec         H1J 1C3   
+Leipzig                         04179     
+London                          SW7 1RZ   
+Anchorage        AK             99508     
+Köln                            50739     
+Paris                           75012     
+México D.F.                     05033     
+Salzburg                        5020      
+Lisboa                          1756      
+Rio de Janeiro   RJ             02389-673 
+Sao Paulo        SP             05487-020 
+Cunewalde                       01307     
+Albuquerque      NM             87110     
+Reggio Emilia                   42100     
+Rio de Janeiro   RJ             02389-890 
+Genève                          1203      
+Madrid                          28001     
+Stavern                         4110      
+Boise            ID             83720     
+London                          OX15 4NB  
+Kobenhavn                       1734      
+Paris                           75016     
+Lander           WY             82520     
+Charleroi                       B-6000    
+Portland         OR             97201     
+Butte            MT             59801     
+Münster                         44087     
+Sao Paulo        SP             05634-030 
+Kirkland         WA             98034     
+Århus                           8200      
+Lyon                            69004     
+Reims                           51100     
+Stuttgart                       70563     
+Oulu                            90110     
+Resende          SP             08737-363 
+Seattle          WA             98128     
+Helsinki                        21240     
+Warszawa                        01-012    
+
+-- (c)
+
+select distinct e.city, e.region, e.postalcode from employees e left outer join customers c on c.city = e.city;
+City      Region  PostalCode
+--------  ------  ----------
+Seattle   WA      98122     
+Tacoma    WA      98401     
+Kirkland  WA      98033     
+Redmond   WA      98052     
+London    NULL    SW1 8JR   
+London    NULL    EC2 7JR   
+London    NULL    RG1 9SP   
+Seattle   WA      98105     
+London    NULL    WG2 7LT   
+
+
